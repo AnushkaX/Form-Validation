@@ -1,0 +1,242 @@
+<html>
+
+<head>
+    <title>
+        JS Form Validation
+    </title>
+
+    <style>
+        p {
+            margin: 0px;
+        }
+
+        label {
+            width: 110px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        textarea {
+            width: 250px;
+            height: 100px;
+            resize: none;
+            overflow-y: scroll;
+        }
+
+        span {
+            width: 10px;
+            display: inline-block;
+            vertical-align: top;
+            color: red;
+        }
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            width: 70px;
+            margin-left: 5px;
+        }
+
+        .error {
+            margin-left: 175px;
+            margin-right: 10px;
+            color: red;
+            width: 20px;
+        }
+
+        .errorT {
+            width: auto;
+            margin-left: 325px;
+            color: red;
+        }
+
+        #captcha {
+            width: 100px;
+            padding: 1px;
+            background-color: lightgray;
+            text-align: center;
+        }
+
+        #txtCaptcha {
+            margin-left: 325px;
+            margin-top: 2;
+            margin-bottom: 2;
+        }
+
+        #reset {
+            margin-left: 325px;
+        }
+
+        .spambot {
+            width: 321px;
+        }
+
+        .input {
+            margin-left: 0px;
+        }
+
+    </style>
+
+<body>
+
+    <form id="form_registration" action="">
+        <p><b>Contact Us / Request Support</b></p>
+        <p>General questions about our products and services</p>
+        <hr>
+
+        <label>Full Name : </label>
+        <label class="error" id="lblFullError" for="surname"></label>
+        <input type="text" name="fullname" id="fullName"><br>
+        <label class="errorT" id="lblFullErrorText" for="fullname"></label><br>
+        <br>
+
+        <label>E-mail Address : </label>
+        <label class="error" id="lblEmailError" for="surname"></label>
+        <input type="text" name="email" id="email"><br>
+        <label class="errorT" id="lblEmailErrorText" for="email"></label><br>
+        <br>
+
+        <label id="lblSubject" for="subject">Subject : </label>
+        <label class="error" id="lblSubjectError" for="surname"></label>
+        <input type="text" name="subject" id="subject"><br>
+        <label class="errorT" id="lblSubjectErrorText" for="subject"></label><br>
+        <br>
+
+        <label id="lblMessage" for="message">Message : </label>
+        <label class="error" id="lblMessageError" for="surname"></label>
+        <textarea class="" type="text" name="message" id="message"></textarea><br>
+        <label class="errorT" id="lblMessageErrorText" for="message"></label><br>
+        <br>
+
+        <label class="spambot">Are you a human or spambot ?</label>
+        <label id="captcha"></label>
+        <input id="refresh" type="button" class="btn" value="Refresh" onclick="refreshCaptcha()" /><br />
+
+        <input id="txtCaptcha" type="text" /><br>
+        <label class="errorT" id="lblCaptcha"></label><br />
+
+        <button id="reset" type="button" class="btn" onclick="reset_form()">Reset</button>
+        <button type="button" class="btn" onclick="form_validation()">Submit</button>
+
+    </form>
+    <script>
+        let a, b;
+
+
+        let text, indicator;
+
+        refreshCaptcha();
+
+        function form_validation() {
+
+            let fullNameObj = document.getElementById("fullName").value;
+            let emailObj = document.getElementById("email").value;
+            let subjectObj = document.getElementById("subject").value;
+            let messageObj = document.getElementById("message").value;
+            let capObj = document.getElementById('txtCaptcha').value;
+
+            if (fullNameObj.length == 0) {
+                text = "The <b>Full Name</b> is a required field!";
+                indicator = "*";
+                document.getElementById("fullName").style.backgroundColor = "#F8A8A8";
+            }
+            else {
+                text = "";
+                indicator = "";
+                document.getElementById("fullName").style.backgroundColor = "";
+            }
+            document.getElementById("lblFullError").innerHTML = indicator;
+            document.getElementById("lblFullErrorText").innerHTML = text;
+
+            if (emailObj.length == 0) {
+                text = "The <b>E-Mail</b> is a required field!";
+                indicator = "*";
+                document.getElementById("email").style.backgroundColor = "#F8A8A8";
+            }
+            else {
+                text = "";
+                indicator = "";
+                document.getElementById("email").style.backgroundColor = "";
+            }
+            document.getElementById("lblEmailError").innerHTML = indicator;
+            document.getElementById("lblEmailErrorText").innerHTML = text;
+
+            if (subjectObj.length == 0) {
+                text = "The <b>Subject</b> is a required field!";
+                indicator = "*";
+                document.getElementById("subject").style.backgroundColor = "#F8A8A8";
+            }
+            else {
+                text = "";
+                indicator = "";
+                document.getElementById("subject").style.backgroundColor = "";
+            }
+            document.getElementById("lblSubjectError").innerHTML = indicator;
+            document.getElementById("lblSubjectErrorText").innerHTML = text;
+
+            if (messageObj.length == 0) {
+                text = "The <b>Message</b> is a required field!";
+                indicator = "*";
+                document.getElementById("message").style.backgroundColor = "#F8A8A8";
+            }
+            else {
+                text = "";
+                indicator = "";
+                document.getElementById("message").style.backgroundColor = "";
+            }
+            document.getElementById("lblMessageError").innerHTML = indicator;
+            document.getElementById("lblMessageErrorText").innerHTML = text;
+
+            if (parseInt(capObj, 10) != a + b) {
+                document.getElementById("lblCaptcha").innerHTML = "Invalid Captcha";
+            }
+
+            
+        }
+
+        function refreshCaptcha() {
+            let captcha = document.getElementById("captcha");
+
+            a = (Math.floor(Math.random() * 100) + 1);
+            b = (Math.floor(Math.random() * 100) + 1);
+            captcha.innerHTML = a + '+' + b + ' ?';
+        }
+
+        function reset_form() {
+            document.getElementById("fullName").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("subject").value = "";
+            document.getElementById("message").value = "";
+            document.getElementById("fullName").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("subject").value = "";
+            document.getElementById("message").value = "";
+
+            document.getElementById("lblFullError").innerHTML = "";
+            document.getElementById("lblFullErrorText").innerHTML = "";
+            document.getElementById("fullName").style.backgroundColor = "";
+
+            document.getElementById("lblEmailError").innerHTML = "";
+            document.getElementById("lblEmailErrorText").innerHTML = "";
+            document.getElementById("email").style.backgroundColor = "";
+
+            document.getElementById("lblSubjectError").innerHTML = "";
+            document.getElementById("lblSubjectErrorText").innerHTML = "";
+            document.getElementById("subject").style.backgroundColor = "";
+
+            document.getElementById("lblMessageError").innerHTML = "";
+            document.getElementById("lblMessageErrorText").innerHTML = "";
+            document.getElementById("message").style.backgroundColor = "";
+
+            document.getElementById("lblCaptcha").innerHTML = "";
+            document.getElementById("txtCaptcha").value = "";
+        }
+    </script>
+
+</body>
+
+</head>
+
+</html>
